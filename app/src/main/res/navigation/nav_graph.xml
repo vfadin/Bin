@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/BinFragment"
-        android:name="com.example.bin.BinFragment"
+        android:name="com.example.bin.ui.HomeFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_bin">
+        tools:layout="@layout/fragment_home">
 
     </fragment>
 </navigation>
