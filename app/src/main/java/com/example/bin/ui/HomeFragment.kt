@@ -1,5 +1,7 @@
 package com.example.bin.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bin.R
 import com.example.bin.databinding.FragmentHomeBinding
+import com.example.bin.domain.entity.BankCard
 import com.example.bin.domain.entity.historyDataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -40,22 +43,32 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     if (it.list.isNotEmpty())
                         binding.textViewHistoryTitle.visibility = View.VISIBLE
                     historyAdapter.updateData(it.list)
-
+                    binding.recyclerViewHistory.smoothScrollToPosition(it.list.lastIndex)
                 }
             }
             viewModel.bankCardStateFlow.collect { card ->
                 card?.let {
-                    with(binding) {
-                        textViewCardInfo.text = card.toString()
-                        textViewBankInfo.text = card.bank.toString()
-                        textViewBankUrl.text = card.bank.url
-                        textViewCountryInfo.text = card.country.toString()
-                    }
-
+                    bindCardInfo(it)
                 }
             }
         }
         bindUi()
+    }
+
+    private fun bindCardInfo(card: BankCard) {
+        with(binding) {
+            textViewCardInfo.text = card.toString()
+            textViewBankInfo.text = card.bank.toString()
+            textViewBankUrl.text = card.bank.url
+            textViewCountryInfo.text = card.country.toString()
+            textViewCountryInfo.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(
+                    "geo: ${card.country.latitude} ${card.country.longitude}"
+                )
+                startActivity(Intent.createChooser(intent, "Открыть карту"))
+            }
+        }
     }
 
     private fun bindUi() {
