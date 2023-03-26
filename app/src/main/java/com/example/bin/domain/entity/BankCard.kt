@@ -10,7 +10,20 @@ data class BankCard(
     val prepaid: Boolean = false,
     val type: String = "",
     val brand: String = "",
-)
+) {
+    override fun toString(): String {
+        return buildString {
+            append("Платежная система: ${scheme}\n")
+            append("Бренд: ${brand}\n")
+            append("Длина номера карты: ${number.length}\t")
+            append("LUNH: ")
+            if (number.luhn) append("Да\n") else append("Нет\n")
+            append("Prepaid: ")
+            if (prepaid) append("Да\n") else append("Нет\n")
+            append("Тип: $type")
+        }
+    }
+}
 
 fun ApiBankCard.toBankCard() = BankCard(
     number = number?.toCardNumber() ?: CardNumber(),

@@ -7,7 +7,15 @@ data class Bank(
     val city: String = "",
     val name: String = "",
     val url: String = "",
-)
+) {
+    override fun toString(): String {
+        return buildString {
+            append("Банк\n")
+            append("Название: $name\n")
+            append("Телефон: $phone")
+        }
+    }
+}
 
 fun ApiBank.toBank() = Bank(
     phone = phone ?: "",

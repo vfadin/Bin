@@ -47,7 +47,6 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryRecyclerViewAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        println(position)
         holder.bind(datalist.getOrElse(position) { "" })
     }
 

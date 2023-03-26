@@ -10,7 +10,15 @@ data class Country(
     val numeric: String = "",
     val currency: String = "",
     val longitude: Int = -1,
-)
+) {
+    override fun toString(): String {
+        return buildString {
+            append("Страна\n")
+            append("$name $emoji\n")
+            append("$latitude, $longitude\n")
+        }
+    }
+}
 
 fun ApiCountry.toCountry() = Country(
     emoji = emoji ?: "",

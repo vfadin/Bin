@@ -40,11 +40,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     if (it.list.isNotEmpty())
                         binding.textViewHistoryTitle.visibility = View.VISIBLE
                     historyAdapter.updateData(it.list)
+
                 }
             }
             viewModel.bankCardStateFlow.collect { card ->
                 card?.let {
-                    println(it)
+                    with(binding) {
+                        textViewCardInfo.text = card.toString()
+                        textViewBankInfo.text = card.bank.toString()
+                        textViewBankUrl.text = card.bank.url
+                        textViewCountryInfo.text = card.country.toString()
+                    }
+
                 }
             }
         }

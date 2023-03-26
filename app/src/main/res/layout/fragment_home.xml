@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:paddingVertical="4dp"
-        android:visibility="gone"
         android:text="@string/label_history"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/recycler_view_history"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +23,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_history"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="200dp" />
 
     <TextView
         android:id="@+id/textview_first"
@@ -45,4 +45,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_first" />
+
+    <TextView
+        android:id="@+id/text_view_card_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_bin" />
+    <TextView
+        android:id="@+id/text_view_bank_info"
+        android:layout_width="match_parent"
+        android:autoLink="phone"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_bin" />
+    <TextView
+        android:id="@+id/text_view_bank_url"
+        android:layout_width="match_parent"
+        android:autoLink="web"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_bank_info" />
+    <TextView
+        android:id="@+id/text_view_country_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="map"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_bank_url" />
 </androidx.appcompat.widget.LinearLayoutCompat>
