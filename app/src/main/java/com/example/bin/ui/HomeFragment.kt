@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bin.R
 import com.example.bin.databinding.FragmentHomeBinding
+import com.example.bin.domain.entity.historyDataStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -34,6 +35,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
+            launch {
+                requireContext().historyDataStore.data.collect {
+                    if (it.list.isNotEmpty())
+                        binding.textViewHistoryTitle.visibility = View.VISIBLE
+                    historyAdapter.updateData(it.list)
+                }
+            }
             viewModel.bankCardStateFlow.collect { card ->
                 card?.let {
                     println(it)
@@ -54,8 +62,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 setOnEditorActionListener { text, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         val bin = text.text.toString()
-                        historyAdapter.updateData(bin)
-                        textViewHistoryTitle.visibility = View.VISIBLE
                         viewModel.getCardInfo(bin)
                         return@setOnEditorActionListener true
                     }

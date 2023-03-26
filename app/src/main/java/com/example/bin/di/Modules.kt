@@ -1,5 +1,6 @@
 package com.example.bin.di
 
+import android.content.Context
 import com.example.bin.data.datasource.BinListRemoteDataSource
 import com.example.bin.data.datasource.IBinListService
 import com.example.bin.data.network.INetwork
@@ -11,6 +12,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.hilt.components.SingletonComponent
 
@@ -52,7 +55,10 @@ object RepositoryModule {
 
     @Provides
     @ActivityRetainedScoped
-    fun provideHomeRepo(dataSource: BinListRemoteDataSource): IHomeRepo {
-        return HomeRepo(dataSource)
+    fun provideHomeRepo(
+        dataSource: BinListRemoteDataSource,
+        @ApplicationContext context: Context,
+    ): IHomeRepo {
+        return HomeRepo(dataSource, context)
     }
 }

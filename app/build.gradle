@@ -39,6 +39,9 @@ android {
 }
 
 dependencies {
+    //DataStore
+    implementation "androidx.datastore:datastore:1.0.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
     //Hilt
     implementation "com.google.dagger:hilt-android:2.42"
     kapt "com.google.dagger:hilt-compiler:2.42"

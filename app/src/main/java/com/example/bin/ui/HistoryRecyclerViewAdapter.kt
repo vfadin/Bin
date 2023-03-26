@@ -1,5 +1,6 @@
 package com.example.bin.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,16 +8,20 @@ import com.example.bin.databinding.ItemHistoryBinding
 
 class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
-    val datalist = mutableListOf<String>()
+    private val datalist = mutableListOf<String>()
     lateinit var listener: OnItemClickListener
 
     interface OnItemClickListener {
         fun onItemClick(value: String)
     }
 
-    fun updateData(data: String) {
-        datalist.add(data)
-        this.notifyItemInserted(datalist.lastIndex)
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(data: List<String>) {
+        datalist.apply {
+            clear()
+            addAll(data)
+        }
+        notifyDataSetChanged()
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
