@@ -7,18 +7,16 @@ import com.example.bin.databinding.ItemHistoryBinding
 
 class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
-    private val datalist = mutableListOf<String>()
+    val datalist = mutableListOf<String>()
     lateinit var listener: OnItemClickListener
 
     interface OnItemClickListener {
         fun onItemClick(value: String)
     }
 
-    fun updateData(datalist: List<String>) {
-        this.datalist.apply {
-            clear()
-            addAll(datalist)
-        }
+    fun updateData(data: String) {
+        datalist.add(data)
+        this.notifyItemInserted(datalist.lastIndex)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -44,6 +42,7 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryRecyclerViewAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        println(position)
         holder.bind(datalist.getOrElse(position) { "" })
     }
 

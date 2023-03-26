@@ -8,15 +8,18 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bin.R
 import com.example.bin.databinding.FragmentHomeBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val adapter = HistoryRecyclerViewAdapter()
+    private val historyAdapter = HistoryRecyclerViewAdapter()
     private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreateView(
@@ -31,8 +34,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.bankCardStateFlow.collect {
-                println(it)
+            viewModel.bankCardStateFlow.collect { card ->
+                card?.let {
+                    println(it)
+                }
             }
         }
         bindUi()
@@ -40,12 +45,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun bindUi() {
         with(binding) {
-            textInputBin.setOnEditorActionListener { text, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    println(text.text)
-                    return@setOnEditorActionListener true
+            recyclerViewHistory.apply {
+                adapter = historyAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+            textInputBin.apply {
+                imeOptions = EditorInfo.IME_ACTION_DONE
+                setOnEditorActionListener { text, actionId, _ ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        val bin = text.text.toString()
+                        historyAdapter.updateData(bin)
+                        textViewHistoryTitle.visibility = View.VISIBLE
+                        viewModel.getCardInfo(bin)
+                        return@setOnEditorActionListener true
+                    }
+                    false
                 }
-                false
+                isSingleLine = true
             }
         }
     }

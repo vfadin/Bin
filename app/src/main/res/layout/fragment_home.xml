@@ -8,7 +8,20 @@
     android:padding="16dp"
     tools:context=".ui.HomeFragment">
 
+    <TextView
+        android:id="@+id/text_view_history_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingVertical="4dp"
+        android:visibility="gone"
+        android:text="@string/label_history"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view_history"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_history"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 
@@ -17,8 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="@string/label_input_your_bin"
         android:paddingTop="16dp"
+        android:text="@string/label_input_your_bin"
         app:layout_constraintBottom_toTopOf="@id/text_input_bin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +41,7 @@
         android:id="@+id/text_input_bin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview_first" />
